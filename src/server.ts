@@ -1,5 +1,6 @@
-import express from 'express';
-import config from './config';
+import express from "express";
+import config from "./config";
+import { test } from "./firebase";
 
 const app = express();
 
@@ -12,7 +13,6 @@ const app = express();
 // Put :id -> update data bundle by id
 // Delete :id -> delete data bundle by id
 
-
 // Data purchase api
 // api object: {
 //   userId: string;
@@ -20,11 +20,16 @@ const app = express();
 //   phoneNumber: string;
 //   units: number;
 // }
+// api-token: string;
 // Post /purchase -> purchase data bundle
 
+app.get("/", (req, res) => {
+    res.send({ ok: "Hello, World!" });
+});
 
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
+app.get("/test", async (req, res) => {
+    const result = await test();
+    res.send(result);
 });
 
 app.listen(config.port, () => {
